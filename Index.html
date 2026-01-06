@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AeroStride Pro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* { box-sizing: border-box; margin:0; padding:0; font-family: Arial, sans-serif; }
+
+body { background:#f4f4f4; color:#111; }
+
+header {
+  background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
+              url("https://img-volc.jianpian.info/super/super/overseas/poster/1000/1767659242997_1000_EQFRW.png~tplv-flrovnc8r8-s3-cC-q:0:0:0:0:q75.webp");
+  background-size: cover;
+  background-position: center;
+  color:white;
+  padding:150px 40px;
+  text-align:center;
+}
+header h1 { font-size:48px; margin-bottom:10px; }
+header p { font-size:18px; max-width:700px; margin:auto; }
+
+.products {
+  max-width:1200px;
+  margin:50px auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(320px,1fr));
+  gap:40px;
+  padding:0 20px;
+}
+
+.product {
+  background:white;
+  border-radius:18px;
+  padding:25px;
+  box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.product img {
+  width:100%;
+  border-radius:12px;
+  transition:opacity .3s;
+  margin-bottom:15px;
+}
+
+.product h2 { font-size:24px; margin-bottom:10px; }
+.product p { margin-bottom:10px; }
+.price { font-size:20px; font-weight:bold; margin-bottom:15px; }
+
+.colors { display:flex; gap:10px; margin-bottom:15px; }
+.color {
+  width:25px;
+  height:25px;
+  border-radius:50%;
+  border:2px solid #ccc;
+  cursor:pointer;
+}
+
+.size-system select {
+  width:100%;
+  padding:6px;
+  margin-bottom:10px;
+}
+
+.sizes {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:15px;
+}
+
+.size {
+  padding:6px 12px;
+  border:1px solid #ccc;
+  border-radius:20px;
+  cursor:pointer;
+  font-size:13px;
+}
+
+.size:hover,
+.size.active {
+  background:black;
+  color:white;
+}
+
+button {
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:25px;
+  background:black;
+  color:white;
+  cursor:pointer;
+}
+button:hover { background:#222; }
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>AeroFlow</h1>
+  <p>Elite-level speed boots engineered for professionals. Maximum acceleration, control, and precision.</p>
+</header>
+
+<section class="products">
+
+<!-- PRODUCT 1 -->
+<div class="product">
+  <img id="shoe1" src="gray.png">
+  <h2>AeroFlow basic</h2>
+  <p>A lightweight casual sneaker with a breathable upper, padded collar, and a durable cushioned sole designed for everyday comfort and support.
+All with a sleek design and an innovated lace system.</p>
+  <div class="price">$50</div>
+
+  <div class="colors">
+    <div class="color" style="background:gray" onclick="changeImage('shoe1','gray')"></div>
+    <div class="color" style="background:black" onclick="changeImage('shoe1','black')"></div>
+    <div class="color" style="background:#100ac7" onclick="changeImage('shoe1','blue')"></div>
+  </div>
+
+  <div class="size-system">
+    <select onchange="changeSizes(this.value,'sizes1')">
+      <option value="US">US</option>
+      <option value="UK">UK</option>
+      <option value="EU">EU</option>
+    </select>
+  </div>
+
+  <div class="sizes" id="sizes1"></div>
+  <button>Add to Cart</button>
+</div>
+
+<!-- PRODUCT 2 -->
+<div class="product">
+  <img id="shoe2" src="pro-coffee.png">
+  <h2>AeroFlow Pro </h2>
+  <p>A versatile athletic sneaker featuring a breathable mesh upper, secure lace-up design, padded heel support, and a cushioned sole built for comfort and everyday performance.
+innovated lace system</p>
+  <div class="price">$70</div>
+
+  <div class="colors">
+    <div class="color" style="background:tan" onclick="changeImage('shoe2','tan')"></div>
+    <div class="color" style="background:blue" onclick="changeImage('shoe2','blue')"></div>
+    <div class="color" style="background:white" onclick="changeImage('shoe2','white')"></div>
+  </div>
+
+  <div class="size-system">
+    <select onchange="changeSizes(this.value,'sizes2')">
+      <option value="US">US</option>
+      <option value="UK">UK</option>
+      <option value="EU">EU</option>
+    </select>
+  </div>
+
+  <div class="sizes" id="sizes2"></div>
+  <button>Add to Cart</button>
+</div>
+
+</section>
+
+<script>
+const sizeData = {
+  US: [7,8,9,10,11,12],
+  UK: [6,7,8,9,10,11],
+  EU: [40,41,42,43,44,45]
+};
+
+const images = {
+  shoe1: {
+    gray: "gray.png",
+    black: "black.png",
+    blue: "blue.png"
+  },
+  shoe2: {
+    tan: "pro-coffee.png",
+    blue: "pro-bo.png",
+    white: "pro-white.png"
+  }
+};
+
+function changeImage(id, color) {
+  const img = document.getElementById(id);
+  img.style.opacity = 0;
+  setTimeout(() => {
+    img.src = images[id][color];
+    img.style.opacity = 1;
+  }, 100);
+}
+
+function changeSizes(system, targetId) {
+  const container = document.getElementById(targetId);
+  container.innerHTML = "";
+
+  sizeData[system].forEach(size => {
+    const div = document.createElement("div");
+    div.className = "size";
+    div.textContent = size;
+    div.onclick = () => {
+      [...container.children].forEach(s => s.classList.remove("active"));
+      div.classList.add("active");
+    };
+    container.appendChild(div);
+  });
+}
+
+/* Load default sizes */
+changeSizes("US", "sizes1");
+changeSizes("US", "sizes2");
+</script>
+
+</body>
+</html>
